@@ -854,6 +854,21 @@ $percentage = ($total_questions > 0) ? ($correct_answers / $total_questions) * 1
             <div class="question-box">
                 <!-- <p class="question-id">Q-ID: <?php echo htmlspecialchars($current_question_data['question_id']); ?></p> -->
                 <i><p class="category"><?php echo htmlspecialchars($current_question_data['category']); ?></p></i>
+
+                <?php
+                    $question_id = $current_question_data['question_id'];
+                    $stmt_image = $pdo->prepare("SELECT image FROM tbl_questions WHERE question_id = :question_id");
+                    $stmt_image->bindParam(':question_id', $question_id, PDO::PARAM_INT);
+                    $stmt_image->execute();
+                    $image_data = $stmt_image->fetch(PDO::FETCH_ASSOC);
+                    if (!empty($image_data['image'])) {
+                        echo '<img src="images/' . htmlspecialchars($image_data['image']) . '" 
+                                    alt="Question Image" 
+                                    class="img-fluid mt-2 mb-4" 
+                                    style="max-width: 100%; height: auto;">';
+                    }
+                ?>
+
                 <h4 id="question"><?php echo htmlspecialchars($current_question_data['question']); ?></h4>
                 <hr id="hr"></hr>
                 <img src="../go-kikit/icons/GIF_HINT.gif" height="35" class="d-inline-block align-top" id="iconHint" title="Show Hint" alt="Hint Icon">

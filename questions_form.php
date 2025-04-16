@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Fetch questions from the database using PDO and randomize the order
         try {
             $stmt = $pdo->prepare("
-                SELECT q.question_id, q.question, q.category, q.hint
+                SELECT q.question_id, q.question, q.category, q.hint,
                        GROUP_CONCAT(c.choice_id, ':', c.choice ORDER BY c.choice_id ASC SEPARATOR '||') AS choices,
                        a.answer
                 FROM tbl_questions q
@@ -136,7 +136,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Fetch new questions for the new questionnaire_count
         try {
             $stmt = $pdo->prepare("
-                SELECT q.question_id, q.question, q.category, q.hint
+                SELECT q.question_id, q.question, q.category, q.hint,
                        GROUP_CONCAT(c.choice_id, ':', c.choice ORDER BY c.choice_id ASC SEPARATOR '||') AS choices,
                        a.answer
                 FROM tbl_questions q
@@ -987,7 +987,7 @@ $form_percentage = ($form_total_questions > 0) ? ($form_correct_answers / $form_
                                 $image_filename = $image_data['image'] ?? null; // Use 'null' if no image exists
                             } catch (PDOException $e) {
                                 die("Error fetching image: " . $e->getMessage());
-                            }
+                            } 
                             ?>
                             <!-- Display the image if it exists -->
                             <?php if ($image_filename): ?>
