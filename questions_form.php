@@ -996,7 +996,7 @@ $form_percentage = ($form_total_questions > 0) ? ($form_correct_answers / $form_
                         </div>
 
                         <div class="question">
-                            <h5 class="d-inline"><?php echo htmlspecialchars($row['question']); ?></h5>
+                            <h5 class="d-inline"><?php echo nl2br(htmlspecialchars($row['question'])); ?></h5>
                         </div>
                         <hr id="hr"></hr>
                         <div class="choices mt-0 mb-0">
@@ -1113,7 +1113,17 @@ function applyBounceEffect(element, isBounceDown = true) {
 
     // Smoothly scroll to the element
     // element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    const targetY = element.getBoundingClientRect().top + window.scrollY - window.innerHeight / 2 + element.offsetHeight / 2;
+    
+    // Decide targetY based on element size relative to viewport
+    let targetY;
+    if (element.offsetHeight > window.innerHeight) {
+        // If card is taller than viewport, scroll to top of card with small offset
+        targetY = element.getBoundingClientRect().top + window.scrollY - 20;
+    } else {
+        // If smaller, center it in the viewport
+        targetY = element.getBoundingClientRect().top + window.scrollY - window.innerHeight / 2 + element.offsetHeight / 2;
+    }
+
     smoothScrollTo(targetY, 1000); // 2000 ms = 2 seconds
 
 
