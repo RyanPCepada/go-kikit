@@ -792,6 +792,16 @@ $form_percentage = ($form_total_questions > 0) ? ($form_correct_answers / $form_
             height: 40px;
         }
 
+        #go-up-button {
+            position: absolute;
+            margin-right: 2px;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 255, 0.0) !important; /* Blue with 50% opacity */
+            background-color: blue;
+            color: #b5e3ff;
+            color: #81accf;
+        }
+
         #retake-button, #next-test-button {
             border-radius: 4px;
             cursor: pointer;
@@ -847,6 +857,15 @@ $form_percentage = ($form_total_questions > 0) ? ($form_correct_answers / $form_
             }
             .card {
                 margin: 20px auto;
+            }
+            #go-up-button {
+                position: absolute;
+                margin-right: 10px;
+                border-radius: 50%;
+                background-color: rgba(0, 0, 255, 0.0) !important; /* Blue with 50% opacity */
+                background-color: blue;
+                color: #b5e3ff;
+                color: #81accf;
             }
         }
     </style>
@@ -1015,6 +1034,9 @@ $form_percentage = ($form_total_questions > 0) ? ($form_correct_answers / $form_
             
             <div class="bottom-buttons mb-0">
                 <button type="button" class="btn text-light mb-1 bg-primary" id="submit-button" onclick="submitExam()">Submit</button>
+                <button type="button" class="btn btn-transparent text-center align-self-end" id="go-up-button" onclick="goUpButton();">
+                    <i class="fa fa-arrow-up"></i>
+                </button>
                 <div class="button-group">
                     <button type="button" class="btn text-light mb-1 bg-primary" id="retake-button" style="display:none;" onclick="retakeTest()">Retake</button>
                     <button type="button" class="btn text-light mb-1 bg-primary" id="next-test-button" style="display:none;" onclick="NextTest()">Next Test</button>
@@ -1347,6 +1369,7 @@ function submitExam() {
     document.getElementById('submit-button').style.display = 'none';
     document.getElementById('retake-button').style.display = 'block';
     document.getElementById('next-test-button').style.display = 'block';
+    // document.getElementById('go-up-button').style.display = 'block';
 
     // Clear local storage after successful submission
     if (allAnswered) {
@@ -1416,6 +1439,7 @@ function retakeTest() {
     // Hide retake and next test buttons
     document.getElementById('retake-button').style.display = 'none';
     document.getElementById('next-test-button').style.display = 'none';
+    // document.getElementById('go-up-button').style.display = 'none';
 
     // Show the submit button
     document.getElementById('submit-button').style.display = 'block';
@@ -1545,6 +1569,28 @@ $(document).ready(function() {
         updateProgressBar(form_correctAnswers, form_totalQuestions);
     }
 });
+
+
+
+// Function to scroll to the top of the page
+function goUpButton() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+}
+
+// Show the "Go Up" button when the user scrolls down
+window.onscroll = function() {
+    let goUpButton = document.getElementById("go-up-button");
+
+    if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+        goUpButton.style.display = "block";
+    } else {
+        goUpButton.style.display = "none";
+    }
+};
+
 
 
 </script>
