@@ -789,7 +789,7 @@ $percentage = ($total_questions > 0) ? ($correct_answers / $total_questions) * 1
                 <a class="dropdown-item text-light" id="profile" href="./profile.php"><i class="fas fa-user mr-2"></i>Profile</a>
                 <a class="dropdown-item text-light" id="settings" href="./settings.php"><i class="fas fa-cog mr-2"></i>Settings</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item text-danger" id="done_studying" href="logout.php"><i class="fas fa-sign-out-alt mr-2"></i>Done</a>
+                <a class="dropdown-item text-danger" id="done_studying" href="logout.php"><i class="fas fa-sign-out-alt mr-2"></i>Done Reviewing</a>
             </div>
         </div>
     </nav>
@@ -815,7 +815,7 @@ $percentage = ($total_questions > 0) ? ($correct_answers / $total_questions) * 1
                     <img src="../go-kikit/icons/ICON_WELCOME_TO.png" alt="Welcome To" class="Welcome-To mt-5 mb-0">
                     <img src="../go-kikit/icons/ICON_KIKIT.png" alt="Kikit-Face" class="kikit-face">
                     <img src="../go-kikit/icons/ICON-GO-KIKIT-GOLD-ARCDOWN.png" alt="Go-Study-ArcDown" class="Go-Study-ArcDown">
-                    <p class="mt-5 ml-3 mr-3 mb-4">Good luck and have fun studying!</p>
+                    <p class="mt-5 ml-3 mr-3 mb-4">Good luck and have fun reviewing!</p>
                 </div>
             </div>
         </div>
@@ -869,7 +869,7 @@ $percentage = ($total_questions > 0) ? ($correct_answers / $total_questions) * 1
                     }
                 ?>
 
-                <h4 id="question"><?php echo htmlspecialchars($current_question_data['question']); ?></h4>
+                <h4 id="question"><?php echo nl2br(htmlspecialchars($current_question_data['question'])); ?></h4>
                 <hr id="hr"></hr>
                 <img src="../go-kikit/icons/GIF_HINT.gif" height="35" class="d-inline-block align-top" id="iconHint" title="Show Hint" alt="Hint Icon">
                 <div class="row text-center align-items-center justify-content-center" id="hint-section" style="display: none;">

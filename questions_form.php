@@ -883,7 +883,7 @@ $form_percentage = ($form_total_questions > 0) ? ($form_correct_answers / $form_
                 <a class="dropdown-item text-light" id="profile" href="./profile.php"><i class="fas fa-user mr-2"></i>Profile</a>
                 <a class="dropdown-item text-light" id="settings" href="./settings.php"><i class="fas fa-cog mr-2"></i>Settings</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item text-danger" id="done_studying" href="logout.php"><i class="fas fa-sign-out-alt mr-2"></i>Done</a>
+                <a class="dropdown-item text-danger" id="done_studying" href="logout.php"><i class="fas fa-sign-out-alt mr-2"></i>Done Reviewing</a>
             </div>
         </div>
     </nav>
