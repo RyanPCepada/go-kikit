@@ -865,7 +865,7 @@ $percentage = ($total_questions > 0) ? ($correct_answers / $total_questions) * 1
                         echo '<img src="images/' . htmlspecialchars($image_data['image']) . '" 
                                     alt="Question Image" 
                                     class="img-fluid mt-2 mb-4" 
-                                    style="max-width: 100%; height: auto;">';
+                                    style="width: 100%; height: auto;">';
                     }
                 ?>
 
