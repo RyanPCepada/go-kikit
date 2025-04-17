@@ -991,7 +991,7 @@ $form_percentage = ($form_total_questions > 0) ? ($form_correct_answers / $form_
                             ?>
                             <!-- Display the image if it exists -->
                             <?php if ($image_filename): ?>
-                                <img src="images/<?php echo htmlspecialchars($image_filename); ?>" alt="Question Image" class="img-fluid mt-2 mb-4" style="max-width: 100%; height: auto;">
+                                <img src="images/<?php echo htmlspecialchars($image_filename); ?>" alt="Question Image" class="img-fluid mt-2 mb-4" style="width: 100%; height: auto;">
                             <?php endif; ?>
                         </div>
 
