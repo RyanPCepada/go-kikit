@@ -1113,12 +1113,12 @@ function applyBounceEffect(element, isBounceDown = true) {
 
     // Smoothly scroll to the element
     // element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    
+
     // Decide targetY based on element size relative to viewport
     let targetY;
     if (element.offsetHeight > window.innerHeight) {
         // If card is taller than viewport, scroll to top of card with small offset
-        targetY = element.getBoundingClientRect().top + window.scrollY - 20;
+        targetY = element.getBoundingClientRect().top + window.scrollY - 13;
     } else {
         // If smaller, center it in the viewport
         targetY = element.getBoundingClientRect().top + window.scrollY - window.innerHeight / 2 + element.offsetHeight / 2;
