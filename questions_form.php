@@ -1118,7 +1118,7 @@ function applyBounceEffect(element, isBounceDown = true) {
     let targetY;
     if (element.offsetHeight > window.innerHeight) {
         // If card is taller than viewport, scroll to top of card with small offset
-        targetY = element.getBoundingClientRect().top + window.scrollY - 13;
+        targetY = element.getBoundingClientRect().top + window.scrollY - 15;
     } else {
         // If smaller, center it in the viewport
         targetY = element.getBoundingClientRect().top + window.scrollY - window.innerHeight / 2 + element.offsetHeight / 2;
