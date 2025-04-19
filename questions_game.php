@@ -686,9 +686,9 @@ $percentage = ($total_questions > 0) ? ($correct_answers / $total_questions) * 1
             height: 100px;
         }
 
-        .hidden-choices {
+        /* .hidden-choices {
             display: none;
-        }
+        } */
 
         #answerModal .modal-dialog {
             padding: 25px;
@@ -753,9 +753,9 @@ $percentage = ($total_questions > 0) ? ($correct_answers / $total_questions) * 1
             display: none;
         }
 
-        .hidden-choices {
+        /* .hidden-choices {
             display: none;
-        }
+        } */
     </style>
 </head>
 <body>
@@ -879,7 +879,9 @@ $percentage = ($total_questions > 0) ? ($correct_answers / $total_questions) * 1
                         <div class="alert alert-danger mt-4 mb-3" id="hint-text"><em>No hint for this question.</em></div>
                     <?php endif; ?>
                 </div>
-                <a href="#" class="show-choices" data-question-id="<?php echo htmlspecialchars($current_question_index); ?>">Show Choices</a>
+                <div class="show-choices-div" style="height: 23px;"> <!-- ADDED HEIGHT HERE TO PUSH CHOICES LOWER THAN THE HINT BULB ICON -->
+                    <a href="#" class="show-choices" data-question-id="<?php echo htmlspecialchars($current_question_index); ?>"></a>
+                </div>
                 <div id="choices-<?php echo htmlspecialchars($current_question_index); ?>" class="hidden-choices">
                     <form id="question-form-<?php echo htmlspecialchars($current_question_index); ?>" method="post" action="">
                         <div class="answer-buttons mt-3">
