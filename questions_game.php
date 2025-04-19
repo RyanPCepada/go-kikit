@@ -746,6 +746,9 @@ $percentage = ($total_questions > 0) ? ($correct_answers / $total_questions) * 1
                 min-height: 565px;
                 position: relative;
             }
+            #study-name {
+                margin-top: -50px;
+            }
         }
 
         /* Hide audio element */
