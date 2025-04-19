@@ -911,7 +911,7 @@ $percentage = ($total_questions > 0) ? ($correct_answers / $total_questions) * 1
                 </div>
                 <div class="answer-and-send">
                     <div class="answer mb-3">
-                        <input type="text" id="answer_<?php echo htmlspecialchars($current_question_index); ?>" name="answer_display" placeholder="Your answer here...">
+                        <input class="text-center" type="text" id="answer_<?php echo htmlspecialchars($current_question_index); ?>" name="answer_display" placeholder="Your answer here...">
                     </div>
                     <button type="button" class="btn btn-success" id="send-button">
                         <i class="fas fa-paper-plane"></i> Send Answer
