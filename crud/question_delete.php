@@ -2,27 +2,27 @@
 // Process delete operation after confirmation
 if (isset($_POST["question_id"]) && !empty($_POST["question_id"])) {
     // Include config file
-    require_once "../../config.php";
+    require_once "../config.php";
 
     // Begin a transaction
     $pdo->beginTransaction();
 
     try {
         // Delete related choices
-        $sql_choices = "DELETE FROM gokikit_tbl_choices WHERE question_id = :question_id";
+        $sql_choices = "DELETE FROM tbl_choices WHERE question_id = :question_id";
         $stmt_choices = $pdo->prepare($sql_choices);
         $stmt_choices->bindParam(":question_id", $param_question_id);
         $param_question_id = trim($_POST["question_id"]);
         $stmt_choices->execute();
 
         // Delete related answers
-        $sql_answers = "DELETE FROM gokikit_tbl_answers WHERE question_id = :question_id";
+        $sql_answers = "DELETE FROM tbl_answers WHERE question_id = :question_id";
         $stmt_answers = $pdo->prepare($sql_answers);
         $stmt_answers->bindParam(":question_id", $param_question_id);
         $stmt_answers->execute();
 
         // Delete the question
-        $sql_question = "DELETE FROM gokikit_tbl_questions WHERE question_id = :question_id";
+        $sql_question = "DELETE FROM tbl_questions WHERE question_id = :question_id";
         $stmt_question = $pdo->prepare($sql_question);
         $stmt_question->bindParam(":question_id", $param_question_id);
         $stmt_question->execute();

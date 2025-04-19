@@ -1,6 +1,6 @@
 <?php
 // Include config file
-require_once "../../config.php";
+require_once "../config.php";
 
 // Define variables and initialize with empty values
 $question = $category = $keyword = $hint = $questionType = "";
@@ -66,8 +66,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check input errors before updating in the database
     if (empty($question_err) && empty($choice_err) && empty($answer_err) && empty($category_err) && empty($keyword_err) && empty($hint_err) && empty($questionType_err)) {
         try {
-            // Update gokikit_tbl_questions
-            $sql = "UPDATE gokikit_tbl_questions SET question = :question, category = :category, keyword = :keyword, hint = :hint, questionType = :questionType WHERE question_id = :question_id";
+            // Update tbl_questions
+            $sql = "UPDATE tbl_questions SET question = :question, category = :category, keyword = :keyword, hint = :hint, questionType = :questionType WHERE question_id = :question_id";
             $stmt = $pdo->prepare($sql);
             $stmt->execute([
                 ':question' => $question,
@@ -78,7 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 ':question_id' => $_POST["question_id"]
             ]);
 
-            // Update gokikit_tbl_choices
+            // Update tbl_choices
             $choice_ids = [
                 'a' => $_POST["choice_a_id"],
                 'b' => $_POST["choice_b_id"],
@@ -94,7 +94,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             ];
 
             foreach ($choice_ids as $key => $choice_id) {
-                $choice_sql = "UPDATE gokikit_tbl_choices SET choice = :choice WHERE choice_id = :choice_id AND question_id = :question_id";
+                $choice_sql = "UPDATE tbl_choices SET choice = :choice WHERE choice_id = :choice_id AND question_id = :question_id";
                 $choice_stmt = $pdo->prepare($choice_sql);
                 $choice_stmt->execute([
                     ':choice_id' => $choice_id,
@@ -103,8 +103,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 ]);
             }
 
-            // Update gokikit_tbl_answers
-            $answer_sql = "UPDATE gokikit_tbl_answers SET answer = :answer WHERE question_id = :question_id";
+            // Update tbl_answers
+            $answer_sql = "UPDATE tbl_answers SET answer = :answer WHERE question_id = :question_id";
             $answer_stmt = $pdo->prepare($answer_sql);
             $answer_stmt->execute([
                 ':answer' => $answer,
@@ -125,7 +125,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         try {
             // Fetch question details
-            $sql = "SELECT * FROM gokikit_tbl_questions WHERE question_id = :question_id";
+            $sql = "SELECT * FROM tbl_questions WHERE question_id = :question_id";
             $stmt = $pdo->prepare($sql);
             $stmt->execute([':question_id' => $question_id]);
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -139,7 +139,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $questionType = $row["questionType"];
                 
                 // Fetch choices
-                $choice_sql = "SELECT * FROM gokikit_tbl_choices WHERE question_id = :question_id";
+                $choice_sql = "SELECT * FROM tbl_choices WHERE question_id = :question_id";
                 $choice_stmt = $pdo->prepare($choice_sql);
                 $choice_stmt->execute([':question_id' => $question_id]);
                 $choices = $choice_stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -159,7 +159,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
 
                 // Fetch the correct answer
-                $answer_sql = "SELECT * FROM gokikit_tbl_answers WHERE question_id = :question_id";
+                $answer_sql = "SELECT * FROM tbl_answers WHERE question_id = :question_id";
                 $answer_stmt = $pdo->prepare($answer_sql);
                 $answer_stmt->execute([':question_id' => $question_id]);
                 $answer_row = $answer_stmt->fetch(PDO::FETCH_ASSOC);

@@ -2,10 +2,10 @@
 // Check existence of id parameter before processing further
 if(isset($_GET["question_id"]) && !empty(trim($_GET["question_id"]))){
     // Include config file
-    require_once "../../config.php";
+    require_once "../config.php";
     
     // Prepare to select the question details
-    $sql = "SELECT * FROM gokikit_tbl_questions WHERE question_id = :question_id";
+    $sql = "SELECT * FROM tbl_questions WHERE question_id = :question_id";
     
     if($stmt = $pdo->prepare($sql)){
         // Bind variables to the prepared statement as parameters
@@ -28,7 +28,7 @@ if(isset($_GET["question_id"]) && !empty(trim($_GET["question_id"]))){
                 $questionType = $row["questionType"]; // No default value needed
                 
                 // Prepare to select choices
-                $choices_sql = "SELECT choice FROM gokikit_tbl_choices WHERE question_id = :question_id ORDER BY choice_id";
+                $choices_sql = "SELECT choice FROM tbl_choices WHERE question_id = :question_id ORDER BY choice_id";
                 $choices_stmt = $pdo->prepare($choices_sql);
                 $choices_stmt->bindParam(":question_id", $param_question_id);
                 
@@ -41,7 +41,7 @@ if(isset($_GET["question_id"]) && !empty(trim($_GET["question_id"]))){
                 }
 
                 // Prepare to select the answer
-                $answer_sql = "SELECT answer FROM gokikit_tbl_answers WHERE question_id = :question_id";
+                $answer_sql = "SELECT answer FROM tbl_answers WHERE question_id = :question_id";
                 $answer_stmt = $pdo->prepare($answer_sql);
                 $answer_stmt->bindParam(":question_id", $param_question_id);
                 

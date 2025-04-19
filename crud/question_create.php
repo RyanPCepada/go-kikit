@@ -83,7 +83,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $pdo->beginTransaction();
 
             // Insert question into the database
-            $sql = "INSERT INTO gokikit_tbl_questions (question, hint, category, keyword, questionType, dateAdded, dateModified, study_id) 
+            $sql = "INSERT INTO tbl_questions (question, hint, category, keyword, questionType, dateAdded, dateModified, study_id) 
                     VALUES (:question, :hint, :category, :keyword, :questionType, NOW(), NOW(), :study_id)";
 
             $stmt = $pdo->prepare($sql);
@@ -104,7 +104,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $question_id = $pdo->lastInsertId();
 
             // Insert choices into the database
-            $sql = "INSERT INTO gokikit_tbl_choices (choice, dateAdded, dateModified, question_id) VALUES (:choice, NOW(), NOW(), :question_id)";
+            $sql = "INSERT INTO tbl_choices (choice, dateAdded, dateModified, question_id) VALUES (:choice, NOW(), NOW(), :question_id)";
             $stmt = $pdo->prepare($sql);
             foreach ($choices as $choice) {
                 $stmt->bindParam(":choice", $choice);
@@ -115,7 +115,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
 
             // Insert the correct answer into the database
-            $sql = "INSERT INTO gokikit_tbl_answers (answer, dateModified, question_id) VALUES (:answer, NOW(), :question_id)";
+            $sql = "INSERT INTO tbl_answers (answer, dateModified, question_id) VALUES (:answer, NOW(), :question_id)";
             $stmt = $pdo->prepare($sql);
             $stmt->bindParam(":answer", $answer);
             $stmt->bindParam(":question_id", $question_id);

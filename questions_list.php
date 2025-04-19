@@ -232,9 +232,9 @@ unset($pdo);
                                             <!-- <td><?php echo htmlspecialchars($row['date_added']); ?></td>
                                             <td><?php echo htmlspecialchars($row['date_modified']); ?></td> -->
                                             <td>
-                                                <a href="crud/question_read.php?question_id=<?php echo htmlspecialchars($row['id']); ?>" class="mr-3" title="View Record" data-toggle="tooltip"><span class="fa fa-eye"></span></a>
-                                                <a href="crud/question_update.php?question_id=<?php echo htmlspecialchars($row['id']); ?>" class="mr-3" title="Update Record" data-toggle="tooltip"><span class="fa fa-pencil-alt"></span></a>
-                                                <a href="crud/question_delete.php?question_id=<?php echo htmlspecialchars($row['id']); ?>" title="Delete Record" data-toggle="tooltip"><span class="fa fa-trash"></span></a>
+                                                <a onclick="errorAlert();" href="crud/question_read.php?question_id=<?php echo htmlspecialchars($row['id']); ?>" class="mr-3" title="View Record" data-toggle="tooltip"><span class="fa fa-eye"></span></a>
+                                                <a onclick="errorAlert();" href="crud/question_update.php?question_id=<?php echo htmlspecialchars($row['id']); ?>" class="mr-3" title="Update Record" data-toggle="tooltip"><span class="fa fa-pencil-alt"></span></a>
+                                                <a onclick="errorAlert();" href="crud/question_delete.php?question_id=<?php echo htmlspecialchars($row['id']); ?>" title="Delete Record" data-toggle="tooltip"><span class="fa fa-trash"></span></a>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
@@ -371,6 +371,9 @@ unset($pdo);
             });
         });
 
+        function errorAlert() {
+            alert("Can't perform this action right now.");
+        }
 
     </script>
 </body>
