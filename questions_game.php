@@ -719,14 +719,14 @@ $percentage = ($total_questions > 0) ? ($correct_answers / $total_questions) * 1
         }
 
         #proceed-button {
-            background-color: #FF007F;
+            /* background-color: #FF007F; */
             color: white;
             width: auto;
         }
 
-        #proceed-button:hover {
-            background-color: #E6007E; /* Darker Rose Pink on hover */
-        }
+        /* #proceed-button:hover {
+            background-color: #E6007E; /* Darker Rose Pink on hover /
+        } */
 
         /* Footer Pink */
         .footer {
@@ -939,7 +939,7 @@ $percentage = ($total_questions > 0) ? ($correct_answers / $total_questions) * 1
                     <!-- Paragraph to display the correct answer when the answer is wrong -->
                     <p id="correctAnswerMessage" class="text-info font-weight-bold"></p>
                     <div>
-                        <button type="button" class="btn" id="proceed-button" data-dismiss="modal">Proceed</button>
+                        <button type="button" class="btn btn-success" id="proceed-button" data-dismiss="modal">Proceed</button>
                     </div>
                 </div>
             </div>
