@@ -352,7 +352,8 @@ $uncategorizedAnswers = array_merge($uncategorizedAnswers, $additionalUncategori
                     <?php foreach ($groupedKeywords as $category => $rows): ?>
                         <h3 class="text-center mt-4 mb-3" style="color: gold;">
                             <?php echo htmlspecialchars($category); ?>
-                            <a href="#" class="edit-category" data-bs-toggle="modal" data-bs-target="#editCategoryModal" data-category="<?php echo htmlspecialchars($category); ?>" title="Edit Category">
+                            <a href="#" class="edit-category" data-bs-toggle="modal" data-bs-target="#editCategoryModal" data-category="<?php echo htmlspecialchars($category); ?>" title="Edit Category"
+                                onclick="errorAlert();">
                                 <span class="fa fa-pencil-alt text-success" style="font-size: 18px; color: gray;"></span>
                             </a>
 
@@ -380,7 +381,7 @@ $uncategorizedAnswers = array_merge($uncategorizedAnswers, $additionalUncategori
                                         <td class="answer-col"><?php echo htmlspecialchars($row['answer_text']); ?></td>
                                         <td class="keyword-col"><?php echo htmlspecialchars($row['keyword']); ?></td>
                                         <td class="edit-col">
-                                        <a href="#" 
+                                        <a href="#" onclick="errorAlert();"
                                             class="edit-answer" 
                                             data-bs-toggle="modal" 
                                             data-bs-target="#editAnswerKeywordModal"
@@ -456,6 +457,35 @@ $uncategorizedAnswers = array_merge($uncategorizedAnswers, $additionalUncategori
         </div>
     </div>
 
+
+
+    <!-- Modal -->
+<div class="modal fade text-center" id="pinModal" tabindex="-1" role="dialog" aria-labelledby="pinModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="label-study-title"></h5>
+        <button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center">
+        <h5 class="modal-body-title mt-2 mb-3" id="label-enter-pin1">Enter PIN 2</h5>
+        <div class="pin-input-container mb-5">
+          <input type="text" class="pin-input form-control d-inline-block" maxlength="1" size="1">
+          <input type="text" class="pin-input form-control d-inline-block" maxlength="1" size="1">
+          <input type="text" class="pin-input form-control d-inline-block" maxlength="1" size="1">
+          <input type="text" class="pin-input form-control d-inline-block" maxlength="1" size="1">
+          <input type="text" class="pin-input form-control d-inline-block" maxlength="1" size="1">
+          <input type="text" class="pin-input form-control d-inline-block" maxlength="1" size="1">
+        </div>
+        <div class="alert-container mt-0 mb-0" style="display:none;">
+            <p class="text-danger">Incorrect PIN. Please try again.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
     <!-- Edit Category Modal -->
     <div class="modal fade" id="editCategoryModal" tabindex="-1" aria-labelledby="editCategoryModalLabel" aria-hidden="true">
@@ -610,54 +640,59 @@ $uncategorizedAnswers = array_merge($uncategorizedAnswers, $additionalUncategori
             updateRecordCount();
         });
 
-        document.addEventListener('DOMContentLoaded', function() {
-            var editCategoryLinks = document.querySelectorAll('.edit-category');
-            var editAnswerLinks = document.querySelectorAll('.edit-answer');
+        // COMMENT FOR NOW TO DENY EDITING OF CATEGORY AND ANSWER AND REPLACED BY ERROR MESSAGE
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     var editCategoryLinks = document.querySelectorAll('.edit-category');
+        //     var editAnswerLinks = document.querySelectorAll('.edit-answer');
 
-            // Existing Category Edit Modal
-            editCategoryLinks.forEach(function(link) {
-                link.addEventListener('click', function(event) {
-                    event.preventDefault();
-                    var categoryName = this.getAttribute('data-category');
-                    var modal = new bootstrap.Modal(document.getElementById('editCategoryModal'));
-                    document.getElementById('categoryNameInput').value = categoryName;
-                    document.getElementById('categoryOldName').value = categoryName;
-                    modal.show();
-                });
-            });
+        //     // Existing Category Edit Modal
+        //     editCategoryLinks.forEach(function(link) {
+        //         link.addEventListener('click', function(event) {
+        //             event.preventDefault();
+        //             var categoryName = this.getAttribute('data-category');
+        //             var modal = new bootstrap.Modal(document.getElementById('editCategoryModal'));
+        //             document.getElementById('categoryNameInput').value = categoryName;
+        //             document.getElementById('categoryOldName').value = categoryName;
+        //             modal.show();
+        //         });
+        //     });
 
-            // New Answer and Keyword Edit Modal
-            editAnswerLinks.forEach(function(link) {
-                link.addEventListener('click', function(event) {
-                    event.preventDefault();
-                    var answer = this.getAttribute('data-answer');
-                    var keyword = this.getAttribute('data-keyword');
-                    var modal = new bootstrap.Modal(document.getElementById('editAnswerKeywordModal'));
-                    document.getElementById('answerInput').value = answer;
-                    document.getElementById('keywordInput').value = keyword;
-                    document.getElementById('answerOldValue').value = answer;
-                    modal.show();
-                });
-            });
+        //     // New Answer and Keyword Edit Modal
+        //     editAnswerLinks.forEach(function(link) {
+        //         link.addEventListener('click', function(event) {
+        //             event.preventDefault();
+        //             var answer = this.getAttribute('data-answer');
+        //             var keyword = this.getAttribute('data-keyword');
+        //             var modal = new bootstrap.Modal(document.getElementById('editAnswerKeywordModal'));
+        //             document.getElementById('answerInput').value = answer;
+        //             document.getElementById('keywordInput').value = keyword;
+        //             document.getElementById('answerOldValue').value = answer;
+        //             modal.show();
+        //         });
+        //     });
 
-            // Handle new category selection
-            document.getElementById('editAnswerKeywordForm').addEventListener('submit', function(event) {
-                var categorySelect = document.getElementById('categorySelect');
-                if (categorySelect.value === 'new-category') {
-                    event.preventDefault();
-                    var newCategory = prompt('Enter the new category name:');
-                    if (newCategory) {
-                        var form = event.target;
-                        var categoryInput = document.createElement('input');
-                        categoryInput.type = 'hidden';
-                        categoryInput.name = 'category';
-                        categoryInput.value = newCategory;
-                        form.appendChild(categoryInput);
-                        form.submit();
-                    }
-                }
-            });
-        });
+        //     // Handle new category selection
+        //     document.getElementById('editAnswerKeywordForm').addEventListener('submit', function(event) {
+        //         var categorySelect = document.getElementById('categorySelect');
+        //         if (categorySelect.value === 'new-category') {
+        //             event.preventDefault();
+        //             var newCategory = prompt('Enter the new category name:');
+        //             if (newCategory) {
+        //                 var form = event.target;
+        //                 var categoryInput = document.createElement('input');
+        //                 categoryInput.type = 'hidden';
+        //                 categoryInput.name = 'category';
+        //                 categoryInput.value = newCategory;
+        //                 form.appendChild(categoryInput);
+        //                 form.submit();
+        //             }
+        //         }
+        //     });
+        // });
+
+        function errorAlert() {
+            alert("Can't perform this action right now.");
+        }
 
     </script>
 </body>
