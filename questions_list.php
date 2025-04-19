@@ -371,10 +371,6 @@ unset($pdo);
             });
         });
 
-        function errorAlert() {
-            alert("Can't perform this action right now.");
-        }
-
     </script>
 </body>
 </html>
