@@ -838,7 +838,7 @@ $percentage = ($total_questions > 0) ? ($correct_answers / $total_questions) * 1
 
 
 <div class="container question-container">
-    <h5 class="mb-3"  id="study-name"><?php echo htmlspecialchars($study_name); ?></h5>
+    <h5 class="mb-3"  id="study-name"><?php echo nl2br(htmlspecialchars($study_name)); ?></h5>
     <?php if (isset($current_question_data)): ?>
         <h2 class="text-center" id="head-question">
             <?php echo isset($current_question_data) ? 'Question ' . $_SESSION['question_count'] : 'No questions yet.'; ?>

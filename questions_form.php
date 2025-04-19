@@ -962,7 +962,7 @@ $form_percentage = ($form_total_questions > 0) ? ($form_correct_answers / $form_
 
 
 <div class="container question-container">
-    <h5 class="mb-3" id="study-name"><?php echo htmlspecialchars($study_name); ?></h5>
+    <h5 class="mb-3" id="study-name"><?php echo nl2br(htmlspecialchars($study_name)); ?></h5>
     <?php if (!empty($_SESSION['questions'])): ?>
         <div class="text-center">
             <h2 class="text-center" id="head-questionnaire">Questionnaire <?php echo $_SESSION['questionnaire_count']; ?></h2>
