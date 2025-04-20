@@ -792,14 +792,21 @@ $form_percentage = ($form_total_questions > 0) ? ($form_correct_answers / $form_
             height: 40px;
         }
 
-        #go-up-button {
-            position: absolute;
-            margin-right: 2px;
+        .arrow-buttons {
+            position: fixed;
+            padding: 0px;
+            right: 5px;
+            top: 50%;
+            background-color: rgba(110, 178, 230, .1);
+            border-radius: 30px;
+            transform: translateY(-50%);
+            z-index: 999;
+        }
+
+        #go-down-button, #go-up-button {
             border-radius: 50%;
-            background-color: rgba(0, 0, 255, 0.0) !important; /* Blue with 50% opacity */
-            background-color: blue;
-            color: #b5e3ff;
             color: #81accf;
+            color: rgba(129, 172, 207, 0.8);
         }
 
         #retake-button, #next-test-button {
@@ -858,14 +865,16 @@ $form_percentage = ($form_total_questions > 0) ? ($form_correct_answers / $form_
             .card {
                 margin: 20px auto;
             }
-            #go-up-button {
-                position: absolute;
-                margin-right: 10px;
-                border-radius: 50%;
-                background-color: rgba(0, 0, 255, 0.0) !important; /* Blue with 50% opacity */
-                background-color: blue;
-                color: #b5e3ff;
+
+            .arrow-buttons {
+                width: 50px;
+                right: 25%;
+                top: 50%;
+                background-color: rgba(110, 178, 230, .1);
+            }
+            #go-down-button, #go-up-button {
                 color: #81accf;
+                color: rgba(129, 172, 207, .9);
             }
         }
     </style>
@@ -1032,11 +1041,18 @@ $form_percentage = ($form_total_questions > 0) ? ($form_correct_answers / $form_
                 <?php endforeach; ?>
             </div>
             
-            <div class="bottom-buttons mb-0">
-                <button type="button" class="btn text-light mb-1 bg-primary" id="submit-button" onclick="submitExam()">Submit</button>
-                <button type="button" class="btn btn-transparent text-center align-self-end" id="go-up-button" onclick="goUpButton();">
+            <div class="arrow-buttons d-flex flex-column">
+                <button type="button" class="btn btn-transparent mb-0" id="go-up-button" onclick="goUpButton();">
                     <i class="fa fa-arrow-up"></i>
                 </button>
+                <button type="button" class="btn btn-transparent" id="go-down-button" onclick="goDownButton();">
+                    <i class="fa fa-arrow-down"></i>
+                </button>
+            </div>
+
+
+            <div class="bottom-buttons mb-0">
+                <button type="button" class="btn text-light mb-1 bg-primary" id="submit-button" onclick="submitExam()">Submit</button>
                 <div class="button-group">
                     <button type="button" class="btn text-light mb-1 bg-primary" id="retake-button" style="display:none;" onclick="retakeTest()">Retake</button>
                     <button type="button" class="btn text-light mb-1 bg-primary" id="next-test-button" style="display:none;" onclick="NextTest()">Next Test</button>
@@ -1580,16 +1596,34 @@ function goUpButton() {
     });
 }
 
-// Show the "Go Up" button when the user scrolls down
+// Function to scroll to the bottom of the page
+function goDownButton() {
+    window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: 'smooth'
+    });
+}
+
+// Show the "Go Up" and "Go Down" buttons based on scroll position
 window.onscroll = function() {
     let goUpButton = document.getElementById("go-up-button");
+    let goDownButton = document.getElementById("go-down-button");
 
+    // Show "Go Up" button when scrolled down a bit
     if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
         goUpButton.style.display = "block";
     } else {
         goUpButton.style.display = "none";
     }
+
+    // Show "Go Down" button when not yet near the bottom
+    if ((window.innerHeight + window.scrollY) < document.body.scrollHeight - 200) {
+        goDownButton.style.display = "block";
+    } else {
+        goDownButton.style.display = "none";
+    }
 };
+
 
 
 
