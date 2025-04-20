@@ -338,7 +338,7 @@ $uncategorizedAnswers = array_merge($uncategorizedAnswers, $additionalUncategori
             <div class="row">
                 <div class="col-md-12">
                     <div class="mt-1 mb-3 clearfix">
-                        <button class="fixed-back-button btn" onclick="window.location.href='./questions_game.php';">
+                        <button class="fixed-back-button btn" onclick="history.back();">
                             <i class="fas fa-arrow-left" style="font-size: 14px;"></i>
                         </button>
                         <h2 class="text-center mb-0 mt-5" id="label-keywords-list">Keywords List</h2>

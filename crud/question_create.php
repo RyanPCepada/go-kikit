@@ -278,7 +278,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <div class="text-center">
                 <button type="submit" class="btn btn-success btn-block mt-5">Add Question</button>
-                <a href="../questions_game.php" class="btn btn-transparent text-light mt-2">Go Back</a>
+                <a onclick="history.back();" class="btn btn-transparent text-light mt-2">Go Back</a>
             </div>
         </form>
     </div>
