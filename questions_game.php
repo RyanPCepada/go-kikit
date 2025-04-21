@@ -177,6 +177,8 @@ $percentage = ($total_questions > 0) ? ($correct_answers / $total_questions) * 1
 ?>
 
 
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -769,7 +771,7 @@ $percentage = ($total_questions > 0) ? ($correct_answers / $total_questions) * 1
             </select>
         </div>
         <div class="ml-auto navbar-icons">
-            <button type="button" class="btn plus-icon ml-2 <?php echo !isset($current_question_data) ? 'zoom-in-out gold-icon' : ''; ?>" onclick="window.location.href='crud/question_create.php'" title="Add New Question">
+            <button type="button" class="btn plus-icon ml-2 <?php echo !isset($current_question_data) ? 'zoom-in-out gold-icon' : ''; ?>" onclick="toQuestionCreate(<?php echo $study_id; ?>);" title="Add New Question"> <!--onclick="window.location.href='crud/question_create.php'"-->
                 <i class="fas fa-plus" id="plus-icon"></i>
             </button>
             <button type="button" class="btn history-icon ml-2" onclick="window.location.href='questions_history.php'" title="Questions History">
@@ -1106,11 +1108,20 @@ $("#send-button").on('click', function(e) {
         updateProgressBar(correctAnswers, totalQuestions);
     }
 });
+
+function toQuestionCreate(study_id) {
+    if (study_id == 26) {
+        alert("Can't add questions right now.");
+    } else {
+        window.location.href = 'crud/question_create.php';
+    }
+}
+
 </script>
 
 
-    <audio id="correctAnswerAudio" src="../go-kikit/audio/AUDIO_CORRECT_SHORTEST.mp3"></audio>
-    <audio id="wrongAnswerAudio" src="../go-kikit/audio/AUDIO_WRONG_SHORTEN.mp3"></audio>
+    <audio id="correctAnswerAudio" src="audio/AUDIO_CORRECT_SHORTEST.mp3"></audio>
+    <audio id="wrongAnswerAudio" src="audio/AUDIO_WRONG_SHORTEN.mp3"></audio>
 
 </body>
 
