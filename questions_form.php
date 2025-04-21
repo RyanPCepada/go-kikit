@@ -860,6 +860,9 @@ $form_percentage = ($form_total_questions > 0) ? ($form_correct_answers / $form_
         }
         
         @media (min-width: 768px) {
+            #study-name {
+                margin-top: -50px;
+            }
             .question-container {
                 margin-top: 50px !important;
                 max-width: 600px;
