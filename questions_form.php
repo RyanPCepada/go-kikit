@@ -76,6 +76,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Fetch questions from the database using PDO and randomize the order
         try {
+            // Set SQL_BIG_SELECTS=1 to allow larger queries
+            $pdo->exec("SET SQL_BIG_SELECTS=1");
+
             $stmt = $pdo->prepare("
                 SELECT q.question_id, q.question, q.category, q.hint,
                        GROUP_CONCAT(c.choice_id, ':', c.choice ORDER BY c.choice_id ASC SEPARATOR '||') AS choices,
@@ -92,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->bindParam(':study_id', $study_id, PDO::PARAM_INT);
             $stmt->execute();
             $questions = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            
+
             // Organize questions with choices and answers
             $organized_questions = [];
             foreach ($questions as $row) {
@@ -112,8 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if ($row['choices']) {
                     $choices = explode('||', $row['choices']);
                     foreach ($choices as $choice) {
-                        // list($choice_id, $choice_text) = explode(':', $choice);
-                        list($choice_id, $choice_text) = explode(':', $choice, 2); // DISPLAYS 1:30 am INSTEAD OF 1 ONLY
+                        list($choice_id, $choice_text) = explode(':', $choice, 2); // Fixed issue of time displaying
                         $organized_questions[$question_id]['choices'][] = [
                             'choice_id' => $choice_id,
                             'choice' => htmlspecialchars_decode($choice_text),
@@ -121,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                 }
             }
-            
+
             $_SESSION['questions'] = array_values($organized_questions); // Re-index array
             $_SESSION['form_questions_count'] = count($_SESSION['questions']); // Update the count based on fetched questions
         } catch (PDOException $e) {
@@ -135,6 +137,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Fetch new questions for the new questionnaire_count
         try {
+            // Set SQL_BIG_SELECTS=1 to allow larger queries
+            $pdo->exec("SET SQL_BIG_SELECTS=1");
+
             $stmt = $pdo->prepare("
                 SELECT q.question_id, q.question, q.category, q.hint,
                        GROUP_CONCAT(c.choice_id, ':', c.choice ORDER BY c.choice_id ASC SEPARATOR '||') AS choices,
@@ -171,8 +176,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if ($row['choices']) {
                     $choices = explode('||', $row['choices']);
                     foreach ($choices as $choice) {
-                        // list($choice_id, $choice_text) = explode(':', $choice);
-                        list($choice_id, $choice_text) = explode(':', $choice, 2); // DISPLAYS 1:30 am INSTEAD OF 1 ONLY
+                        list($choice_id, $choice_text) = explode(':', $choice, 2); // Fixed issue of time displaying
                         $organized_questions[$question_id]['choices'][] = [
                             'choice_id' => $choice_id,
                             'choice' => htmlspecialchars_decode($choice_text),

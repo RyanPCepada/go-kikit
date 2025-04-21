@@ -7,103 +7,107 @@ require_once 'config.php';
 
 // Initialize session variables if not set
 if (!isset($_SESSION['question_count'])) {
-    $_SESSION['question_count'] = 1; // Starting with the first question
-    $_SESSION['score'] = 0;          // Initial score
+    $_SESSION['question_count'] = 1;
+    $_SESSION['score'] = 0;
 }
-
 if (!isset($_SESSION['recent_questions'])) {
-    $_SESSION['recent_questions'] = []; // Initialize recent questions array
+    $_SESSION['recent_questions'] = [];
 }
-$recent_questions_limit = 50; // Limit of recent questions to track
+$recent_questions_limit = 50;
 
-// Handle the welcome modal
 if (!isset($_SESSION['welcome_modal_shown'])) {
     $_SESSION['welcome_modal_shown'] = false;
 }
-
-// Initialize the history session variable if not set
 if (!isset($_SESSION['questions_history'])) {
     $_SESSION['questions_history'] = [];
 }
 
-// Get the study_id from session
 $study_id = isset($_SESSION['study_id']) ? $_SESSION['study_id'] : 1;
 
-// Query to get the study name
+// Get the study name
 $sql_study_name = "
     SELECT s.title 
     FROM tbl_studies s
     WHERE s.study_id = :study_id
 ";
-
 try {
-    // Prepare and execute the query
     $stmt_study_name = $pdo->prepare($sql_study_name);
     $stmt_study_name->bindParam(':study_id', $study_id, PDO::PARAM_INT);
     $stmt_study_name->execute();
     $study = $stmt_study_name->fetch(PDO::FETCH_ASSOC);
-    $study_name = $study['title'] ?? 'Unknown Study'; // Default if not found
+    $study_name = $study['title'] ?? 'Unknown Study';
 } catch (PDOException $e) {
     die("Query failed: " . $e->getMessage());
 }
 
-// Query to get the category, question, choices, and answer
-$sql = "
-    SELECT q.question_id, q.category, q.question, q.hint, c.choice_id, c.choice, a.answer 
-    FROM tbl_questions q
-    LEFT JOIN tbl_choices c ON q.question_id = c.question_id
-    LEFT JOIN tbl_answers a ON q.question_id = a.question_id
-    WHERE q.study_id = :study_id
-    ORDER BY q.question_id, c.choice_id
-";
-
+// Option B: Temporarily allow big joins (if necessary)
 try {
-    // Prepare and execute the query
-    $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(':study_id', $study_id, PDO::PARAM_INT);
-    $stmt->execute();
+    $pdo->query("SET SQL_BIG_SELECTS=1");
+} catch (PDOException $e) {
+    // Silently ignore if not supported
+}
 
-    // Fetch all results
-    $questions = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// Option A: Separate queries (safe)
+try {
+    // Fetch questions first
+    $sql_questions = "
+        SELECT question_id, category, question, hint
+        FROM tbl_questions
+        WHERE study_id = :study_id
+    ";
+    $stmt_questions = $pdo->prepare($sql_questions);
+    $stmt_questions->bindParam(':study_id', $study_id, PDO::PARAM_INT);
+    $stmt_questions->execute();
+    $questions = $stmt_questions->fetchAll(PDO::FETCH_ASSOC);
 
-    // Initialize an array to hold the questions data
     $questions_data = [];
 
-    foreach ($questions as $row) {
-        $question_id = $row['question_id'];
+    foreach ($questions as $q) {
+        $question_id = $q['question_id'];
 
-        if (!isset($questions_data[$question_id])) {
-            $questions_data[$question_id] = [
-                'question_id' => $question_id,
-                'category' => $row['category'],
-                'question' => $row['question'],
-                'hint' => $row['hint'],
-                'choices' => [],
-                'answer' => $row['answer'],
-            ];
-        }
+        // Fetch choices for each question
+        $sql_choices = "
+            SELECT choice_id, choice
+            FROM tbl_choices
+            WHERE question_id = :question_id
+        ";
+        $stmt_choices = $pdo->prepare($sql_choices);
+        $stmt_choices->bindParam(':question_id', $question_id, PDO::PARAM_INT);
+        $stmt_choices->execute();
+        $choices = $stmt_choices->fetchAll(PDO::FETCH_ASSOC);
 
-        if (!empty($row['choice'])) {
-            $questions_data[$question_id]['choices'][] = [
-                'choice_id' => $row['choice_id'],
-                'choice' => $row['choice'],
-            ];
-        }
+        // Fetch the answer for the question
+        $sql_answer = "
+            SELECT answer
+            FROM tbl_answers
+            WHERE question_id = :question_id
+            LIMIT 1
+        ";
+        $stmt_answer = $pdo->prepare($sql_answer);
+        $stmt_answer->bindParam(':question_id', $question_id, PDO::PARAM_INT);
+        $stmt_answer->execute();
+        $answer_row = $stmt_answer->fetch(PDO::FETCH_ASSOC);
+        $answer = $answer_row['answer'] ?? '';
+
+        // Assemble question data
+        $questions_data[] = [
+            'question_id' => $question_id,
+            'category'    => $q['category'],
+            'question'    => $q['question'],
+            'hint'        => $q['hint'],
+            'choices'     => $choices,
+            'answer'      => $answer
+        ];
     }
 
-    // Shuffle the questions
-    $questions_data = array_values($questions_data);
+    // Shuffle questions and choices
     shuffle($questions_data);
-
-    // Shuffle choices for each question
     foreach ($questions_data as &$question) {
         shuffle($question['choices']);
     }
 
-    // Store shuffled questions in session
     $_SESSION['questions_data'] = $questions_data;
 
-    // Initialize the current question index
     if (!isset($_SESSION['current_question_index'])) {
         $_SESSION['current_question_index'] = 0;
     }
@@ -116,10 +120,10 @@ try {
 $sql_profile = "SELECT profilePic FROM tbl_creator WHERE study_id = :study_id";
 try {
     $stmt_profile = $pdo->prepare($sql_profile);
-    $stmt_profile->bindParam(':study_id', $study_id, PDO::PARAM_INT); // Correct parameter
+    $stmt_profile->bindParam(':study_id', $study_id, PDO::PARAM_INT);
     $stmt_profile->execute();
     $user = $stmt_profile->fetch(PDO::FETCH_ASSOC);
-    $profilePic = $user['profilePic'] ?? 'default_profile_pic.png'; // Default image if none is found
+    $profilePic = $user['profilePic'] ?? 'default_profile_pic.png';
 } catch (PDOException $e) {
     die("Query failed: " . $e->getMessage());
 }
@@ -130,40 +134,34 @@ $current_question_data = $_SESSION['questions_data'][$current_question_index] ??
 
 // Handle form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Retrieve submitted data
     $selected_answer = $_POST['selected_answer'] ?? '';
-    $correct_answer = $_POST['answer'] ?? '';
-    $question_id = $_POST['question_id'] ?? '';
+    $correct_answer  = $_POST['answer'] ?? '';
+    $question_id     = $_POST['question_id'] ?? '';
 
-    // Check if the selected answer matches the correct answer
     if (strtolower($selected_answer) === strtolower($correct_answer)) {
-        $_SESSION['score']++; // Increment score if the answer is correct
+        $_SESSION['score']++;
         $answer_status = 'correct';
     } else {
         $answer_status = 'wrong';
     }
 
-    // Update question count and current question index only if form is submitted
     $_SESSION['question_count']++;
     $_SESSION['current_question_index']++;
     if ($_SESSION['current_question_index'] >= count($_SESSION['questions_data'])) {
-        // End of questions, reset or handle accordingly
         $_SESSION['current_question_index'] = 0;
     }
 
-    // Store the answer status in session
     $_SESSION['answer_status'] = $answer_status;
 
-    // Redirect or display result
-    header("Location: ./questions_game.php"); // Redirect to the same page or a results page
+    header("Location: ./questions_game.php");
     exit;
 }
 
 // Determine if there's a previous answer status
 $answer_status = $_SESSION['answer_status'] ?? '';
-unset($_SESSION['answer_status']); // Clear the session variable after use
+unset($_SESSION['answer_status']);
 
-// Handle showing the welcome modal
+// Handle welcome modal
 if ($_SESSION['welcome_modal_shown'] === false && ($_SESSION['question_count'] === 1 && $_SESSION['score'] === 0)) {
     $_SESSION['welcome_modal_shown'] = true;
     $show_welcome_modal = true;
@@ -171,13 +169,12 @@ if ($_SESSION['welcome_modal_shown'] === false && ($_SESSION['question_count'] =
     $show_welcome_modal = false;
 }
 
-// Calculate the percentage of correct answers
-$total_questions = $_SESSION['question_count'] - 1; // Total number of questions answered
-$correct_answers = $_SESSION['score']; // Number of correct answers
+// Calculate percentage of correct answers
+$total_questions = $_SESSION['question_count'] - 1;
+$correct_answers = $_SESSION['score'];
 $percentage = ($total_questions > 0) ? ($correct_answers / $total_questions) * 100 : 0;
 
 ?>
-
 
 
 <!DOCTYPE html>
