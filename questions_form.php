@@ -882,8 +882,8 @@ $form_percentage = ($form_total_questions > 0) ? ($form_correct_answers / $form_
 <body>
     <!-- <iframe src="./audio_player.php" style="display:none;" aria-hidden="true"></iframe> -->
     <nav class="navbar navbar-expand-lg" id="navbar">
-        <!-- <img src="../go-kikit/icons/LOGO-GO-KIKIT-V2.png" alt="Go-Kikit-Logo" class="Go-Kikit-Logo" id="Go-Kikit-Logo"> -->
-        <img src="../go-kikit/icons/LOGO-GO-KIKIT-V2.png" alt="Go-Kikit-Face" class="Go-Kikit-Face" id="Go-Kikit-Face">
+        <!-- <img src="icons/LOGO-GO-KIKIT-V2.png" alt="Go-Kikit-Logo" class="Go-Kikit-Logo" id="Go-Kikit-Logo"> -->
+        <img src="icons/LOGO-GO-KIKIT-V2.png" alt="Go-Kikit-Face" class="Go-Kikit-Face" id="Go-Kikit-Face">
         <div class="form-group" style="position: absolute; margin-left: 60px; margin-top: 15px;">
             <select id="studyOptions" class="form-control" onchange="window.location.href=this.value;">
                 <option value="questions_form.php">Form</option>
@@ -952,10 +952,10 @@ $form_percentage = ($form_total_questions > 0) ? ($form_correct_answers / $form_
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <div class="modal-body text-center">
-                    <!-- <img src="../go-kikit/icons/ICON_WELCOME_TO.png" alt="Welcome To" class="Welcome-To mt-5 mb-0"> -->
-                    <img src="../go-kikit/icons/ICON_KIKIT.png" alt="icon-kikit-face" class="icon-kikit-face mt-5 mb-0"> <!--added "mt-5 mb-0" because the welcome message is commented-->
-                    <!-- <img src="../go-kikit/icons/ICON_KIKIT.png" alt="Kikit" class="kikit-face"> -->
-                    <!-- <img src="../go-kikit/icons/ICON-GOSTUDY-ARCDOWN.png" alt="Go-Kikit-ArcDown" class="Go-Kikit-ArcDown"> -->
+                    <!-- <img src="icons/ICON_WELCOME_TO.png" alt="Welcome To" class="Welcome-To mt-5 mb-0"> -->
+                    <img src="icons/ICON_KIKIT.png" alt="icon-kikit-face" class="icon-kikit-face mt-5 mb-0"> <!--added "mt-5 mb-0" because the welcome message is commented-->
+                    <!-- <img src="icons/ICON_KIKIT.png" alt="Kikit" class="kikit-face"> -->
+                    <!-- <img src="icons/ICON-GOSTUDY-ARCDOWN.png" alt="Go-Kikit-ArcDown" class="Go-Kikit-ArcDown"> -->
                     <p class="mt-4">How many items do you want to answer?</p>
                     <form id="numItemsForm" method="POST">
                         <!-- <input type="number" id="numItems" name="num_items" min="1" max="500" value="50" required> -->
@@ -1066,7 +1066,7 @@ $form_percentage = ($form_total_questions > 0) ? ($form_correct_answers / $form_
     <?php else: ?>
         <div class="centered-message">
             <div class="alert alert-transparent text-center">
-                <img src="../go-kikit/icons/GIF_NOQUESTIONSYET.gif" height="100" class="d-inline-block align-top" id="iconNoQuestionsYet">
+                <img src="icons/GIF_NOQUESTIONSYET.gif" height="100" class="d-inline-block align-top" id="iconNoQuestionsYet">
                 <h3 id="label-no-questions-yet">No questions yet.</h3>
                 <label id="label-click-plus-icon"><i>Please click the "plus" icon above to start!</i></label>
             </div>

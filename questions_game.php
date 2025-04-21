@@ -764,7 +764,7 @@ $percentage = ($total_questions > 0) ? ($correct_answers / $total_questions) * 1
 <body>
     <!-- <iframe src="./audio_player.php" style="display:none;" aria-hidden="true"></iframe> -->
     <nav class="navbar navbar-expand-lg" id="navbar">
-        <img src="../go-kikit/icons/LOGO-GO-KIKIT-V2.png" alt="Go-Kikit-Face" class="Go-Kikit-Face" id="Go-Kikit-Face">
+        <img src="icons/LOGO-GO-KIKIT-V2.png" alt="Go-Kikit-Face" class="Go-Kikit-Face" id="Go-Kikit-Face">
         <div class="form-group" style="position: absolute; margin-left: 60px; margin-top: 15px;">
             <select id="studyOptions" class="form-control" onchange="window.location.href=this.value;">
                 <option value="questions_game.php">Game</option>
@@ -815,9 +815,9 @@ $percentage = ($total_questions > 0) ? ($correct_answers / $total_questions) * 1
                     <span aria-hidden="true" style="font-size: 2rem; color: white;">&times;</span>
                 </button>
                 <div class="modal-body text-center">
-                    <img src="../go-kikit/icons/ICON_WELCOME_TO.png" alt="Welcome To" class="Welcome-To mt-5 mb-0">
-                    <img src="../go-kikit/icons/ICON_KIKIT.png" alt="Kikit-Face" class="kikit-face">
-                    <img src="../go-kikit/icons/ICON-GO-KIKIT-GOLD-ARCDOWN.png" alt="Go-Study-ArcDown" class="Go-Study-ArcDown">
+                    <img src="icons/ICON_WELCOME_TO.png" alt="Welcome To" class="Welcome-To mt-5 mb-0">
+                    <img src="icons/ICON_KIKIT.png" alt="Kikit-Face" class="kikit-face">
+                    <img src="icons/ICON-GO-KIKIT-GOLD-ARCDOWN.png" alt="Go-Study-ArcDown" class="Go-Study-ArcDown">
                     <p class="mt-5 ml-3 mr-3 mb-4">Good luck and have fun reviewing!</p>
                 </div>
             </div>
@@ -874,7 +874,7 @@ $percentage = ($total_questions > 0) ? ($correct_answers / $total_questions) * 1
 
                 <h4 id="question"><?php echo nl2br(htmlspecialchars($current_question_data['question'])); ?></h4>
                 <hr id="hr"></hr>
-                <img src="../go-kikit/icons/GIF_HINT.gif" height="35" class="d-inline-block align-top" id="iconHint" title="Show Hint" alt="Hint Icon">
+                <img src="icons/GIF_HINT.gif" height="35" class="d-inline-block align-top" id="iconHint" title="Show Hint" alt="Hint Icon">
                 <div class="row text-center align-items-center justify-content-center" id="hint-section" style="display: none;">
                     <?php if (!empty($current_question_data['hint'])): ?>
                         <div class="alert alert-info mt-4 mb-3" id="hint-text"><em><?php echo htmlspecialchars($current_question_data['hint']); ?></em></div>
@@ -922,7 +922,7 @@ $percentage = ($total_questions > 0) ? ($correct_answers / $total_questions) * 1
     <?php else: ?>
         <div class="centered-message">
             <div class="alert alert-transparent text-center">
-                <img src="../go-kikit/icons/GIF_NOQUESTIONSYET.gif" height="100" class="d-inline-block align-top" id="iconNoQuestionsYet">
+                <img src="icons/GIF_NOQUESTIONSYET.gif" height="100" class="d-inline-block align-top" id="iconNoQuestionsYet">
                 <h3 id="label-no-questions-yet">No questions yet.</h3>
                 <label id="label-click-plus-icon"><i>Please click the "plus" icon above to start!</i></label>
             </div>
@@ -1035,9 +1035,9 @@ $("#send-button").on('click', function(e) {
     } else {
         // Determine if the answer is correct
         if (finalAnswer === correctAnswerText.toLowerCase()) { // Compare case-insensitively
-            showAnswerModal("Your answer is correct!", "../go-kikit/icons/GIF_CORRECT.gif", "");
+            showAnswerModal("Your answer is correct!", "icons/GIF_CORRECT.gif", "");
         } else {
-            showAnswerModal("Your answer is wrong!", "../go-kikit/icons/GIF_WRONG.gif", 
+            showAnswerModal("Your answer is wrong!", "icons/GIF_WRONG.gif", 
                 '<span class="correct-answer-label">Correct answer: <br></span> <span class="correct-answer-text">' + correctAnswerText + '</span>'
             );
         }

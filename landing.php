@@ -87,10 +87,10 @@
 <body>
     <div class="container">
         <div class="welcome-container">
-            <img src="../go-kikit/icons/ICON_WELCOME_TO.png" alt="Welcome To" class="Welcome-To mt-5 mb-3">
-            <!-- <img src="../go-kikit/icons/ICON-GO-KIKIT-GOLD-ARCUP.png" alt="Go-Kikit-ArcUp" class="Go-Kikit-ArcUp"> -->
-            <img src="../go-kikit/icons/ICON_KIKIT.png" alt="Kikit" class="icon-kikit-face">
-            <img src="../go-kikit/icons/ICON-GO-KIKIT-GOLD-ARCDOWN.png" alt="Go-Study-ArcDown" class="Go-Kikit-ArcDown">
+            <img src="icons/ICON_WELCOME_TO.png" alt="Welcome To" class="Welcome-To mt-5 mb-3">
+            <!-- <img src="icons/ICON-GO-KIKIT-GOLD-ARCUP.png" alt="Go-Kikit-ArcUp" class="Go-Kikit-ArcUp"> -->
+            <img src="icons/ICON_KIKIT.png" alt="Kikit" class="icon-kikit-face">
+            <img src="icons/ICON-GO-KIKIT-GOLD-ARCDOWN.png" alt="Go-Study-ArcDown" class="Go-Kikit-ArcDown">
             <br>
             <button onclick="window.location.href='/go-kikit/studies.php'" class="btn">Start!</button>
         </div>

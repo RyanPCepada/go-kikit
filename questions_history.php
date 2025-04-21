@@ -142,9 +142,9 @@ foreach ($questions_history as $entry) {
                     <?php foreach ($questions_history as $entry): ?>
                         <div class="history-item">
                             <?php if ($entry['status'] === 'correct'): ?>
-                                <img src="../go-kikit/icons/GIF_CORRECT.gif" alt="Correct" class="status-gif">
+                                <img src="icons/GIF_CORRECT.gif" alt="Correct" class="status-gif">
                             <?php else: ?>
-                                <img src="../go-kikit/icons/GIF_WRONG.gif" alt="Wrong" class="status-gif">
+                                <img src="icons/GIF_WRONG.gif" alt="Wrong" class="status-gif">
                             <?php endif; ?>
                             <h4>Question <?php echo $total_count - $question_number + 1; ?>:</h4> <!-- Show question number in reverse order -->
                             <p><?php echo htmlspecialchars($entry['question']); ?></p>
